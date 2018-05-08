@@ -4,7 +4,6 @@ Created on 6 maj 2018
 @author: Albert Defler
 '''
 import os
-import sys
 
 from anki.hooks import wrap
 from aqt.editor import Editor
@@ -12,9 +11,6 @@ from aqt.utils import showInfo, showCritical
 
 from .downloader import SoundOfText
 
-PROFILE_HOME = os.path.expanduser("~/Documents/Anki/User 1")
-
-#from GUI.TranslatorDialog import TranslatorDialog
 default_text_source = ''
 default_audio_language = ''
 
