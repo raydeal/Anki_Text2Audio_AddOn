@@ -8,7 +8,7 @@ So if you want to add sound to a flashcard you can click on an "A" button and le
 It adds sound only to one side of flashcard: Front or Back (you can change it in settings of add-on (see Default Values))
 
 ### Available Languages:
-For list of languages and supported codes of voices please see https://soundoftext.com/docs#index
+For list of languages and supported codes of voices please see [Sound of Text doc](https://soundoftext.com/docs#index)
 
 ## Usage
 
