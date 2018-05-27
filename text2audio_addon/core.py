@@ -4,8 +4,10 @@ Created on 6 maj 2018
 @author: Albert Defler
 '''
 import os
+import sys
 
 from anki.hooks import wrap
+from aqt import QIcon
 from aqt.editor import Editor
 from aqt.utils import showInfo, showCritical
 
@@ -53,8 +55,12 @@ def get_audio(editor):
 
 # Definition of the new button
 def mySetupButtons(self):
-    self._addButton("Get Audio", lambda ed=self: get_audio(ed),
-                    text="A", tip="Translate Text to Audio (Ctrl+A)", key="Ctrl+a")
+    # Place were we keep icons
+    icons_dir = os.path.join(self.mw.pm.addonFolder(), 'text2audio_addon', 'icons')
+    
+    download_audio_btn = self._addButton("download_audio", lambda ed=self: get_audio(ed),
+                        tip="Translate Text to Audio (Ctrl+A)", key="Ctrl+a")
+    download_audio_btn.setIcon(QIcon(os.path.join(icons_dir, 'download_audio.png')))
 
 
 def init():
