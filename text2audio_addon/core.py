@@ -4,7 +4,6 @@ Created on 6 maj 2018
 @author: Albert Defler
 '''
 import os
-import sys
 
 from anki.hooks import wrap
 from aqt import QIcon
@@ -12,16 +11,19 @@ from aqt.editor import Editor
 from aqt.utils import showInfo, showCritical
 
 from .downloader import SoundOfText
+from .utils import create_new_file_name, remove_uploaded_file
 
 default_text_source = ''
 default_audio_language = ''
 
 def get_audio(editor):
-
+    
     if 'front' == default_text_source.lower():
         source_text = editor.note.fields[0].lower()
+        editor.web.eval("focusField(%d);" % 0) #set focus to field where media will be added
     else:
         source_text = editor.note.fields[1].lower()
+        editor.web.eval("focusField(%d);" % 1) #set focus to field where media will be added
         
     source_text = source_text.replace('&nbsp;',' ')   
 
@@ -42,12 +44,15 @@ def get_audio(editor):
             download_result = sot.download_file(audio_url)
             #rename file before copy
             old_file_name = download_result[0]
-            new_file_name = os.path.join(os.path.dirname(old_file_name), '{}.mp3'.format(source_text.strip().rstrip('?!').replace(' ','_')))
-            os.rename(old_file_name, new_file_name)
-            #save to media folder and set audio in note
-            editor.addMedia(unicode(new_file_name,'utf-8'), canDelete = True)
-            #remove tmp file
-            os.remove(new_file_name)
+            media_folder = os.path.join(editor.mw.pm.profileFolder(), "collection.media")
+            new_file_name = create_new_file_name(old_file_name, source_text, media_folder)
+            if new_file_name:
+                os.rename(old_file_name, new_file_name)
+                #save to media folder, set audio in note and remove original file
+                editor.addMedia(unicode(new_file_name,'utf-8'), canDelete = True)
+            else:
+                #remove downloaded file
+                remove_uploaded_file(old_file_name)
             editor.mw.progress.finish()
     else:
         showCritical(result['message'], title = 'Text2Audio download error')
