@@ -10,7 +10,9 @@ It adds sound only to one side of flashcard: Front or Back (you can change it in
 For list of languages and supported codes of voices please see [Sound of Text doc](https://soundoftext.com/docs#index)
 
 ## Usage
-When Add-On is installed properly you will see an extra button ![Image of Text2Audio](https://github.com/raydeal/Anki_Text2Audio_AddOn/blob/master/docs/img/text2audio.png)
+When Add-On is installed properly you will see an extra button 
+![Image of Text2Audio](https://github.com/raydeal/Anki_Text2Audio_AddOn/blob/master/docs/img/text2audio.png)
+
 So if you want to add sound to a flashcard field you can click on the button and let it to do that for you.
 
 ## Default Values
