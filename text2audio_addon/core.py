@@ -64,7 +64,7 @@ def mySetupButtons(self):
     icons_dir = os.path.join(self.mw.pm.addonFolder(), 'text2audio_addon', 'icons')
     
     download_audio_btn = self._addButton("download_audio", lambda ed=self: get_audio(ed),
-                        tip="Translate Text to Audio (Ctrl+A)", key="Ctrl+a")
+                        tip="Translate Text to Audio")
     download_audio_btn.setIcon(QIcon(os.path.join(icons_dir, 'download_audio.png')))
 
 
