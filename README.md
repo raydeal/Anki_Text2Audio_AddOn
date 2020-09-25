@@ -17,12 +17,12 @@ So if you want to add sound to a flashcard field you can click on the button and
 
 ## Default Values
 You can change the default values for text source and audio language. Just chahege the values 
-of the variables in the file 'text2audio.py'. You can find the file in the Add-Ons Folder of your Anki Installation.
+of the variables in the file 'config.json'. You can find the file in the Add-Ons Folder (text2audio) of your Anki Installation.
 
 ```
-core.default_text_source = "back"
-core.default_audio_language = "en-GB" # English (United Kingdom)
+"text_source": "back",
+"audio_language": "en-GB"
 ```
 
 ## Installation
-You can download this project and copy the 'text2audio.py' file and the 'text2audio_addon' folder into your Anki Add-On directory.
+You can download this project and copy the 'text2audio' folder into your Anki Add-On directory.
