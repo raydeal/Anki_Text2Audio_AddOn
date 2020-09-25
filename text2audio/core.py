@@ -5,8 +5,8 @@ Created on 6 maj 2018
 '''
 import os
 
-from anki.hooks import wrap
-from aqt import QIcon
+from anki.hooks import addHook #wrap
+from aqt import mw, QIcon
 from aqt.editor import Editor
 from aqt.utils import showInfo, showCritical
 
@@ -49,7 +49,7 @@ def get_audio(editor):
             if new_file_name:
                 os.rename(old_file_name, new_file_name)
                 #save to media folder, set audio in note and remove original file
-                editor.addMedia(unicode(new_file_name,'utf-8'), canDelete = True)
+                editor.addMedia(new_file_name, canDelete = True)
             else:
                 #remove downloaded file
                 remove_uploaded_file(old_file_name)
@@ -59,16 +59,21 @@ def get_audio(editor):
     
 
 # Definition of the new button
-def mySetupButtons(self):
+def mySetupButtons(buttons, editor):
     # Place were we keep icons
-    icons_dir = os.path.join(self.mw.pm.addonFolder(), 'text2audio_addon', 'icons')
+    #icons_dir = os.path.join(self.mw.pm.addonFolder(), 'text2audio_addon', 'icons')
     
-    download_audio_btn = self._addButton("download_audio", lambda ed=self: get_audio(ed),
-                        tip="Translate Text to Audio")
-    download_audio_btn.setIcon(QIcon(os.path.join(icons_dir, 'download_audio.png')))
-
+    #download_audio_btn = editor._addButton("download_audio", lambda ed=self: get_audio(ed),
+    #                    tip="Translate Text to Audio")
+    # download_audio_btn.setIcon(QIcon(os.path.join(icons_dir, 'download_audio.png')))
+    icons_dir = os.path.join(mw.pm.addonFolder(), 'text2audio', 'icons', 'download_audio.png')
+    editor._links["text2audio"] = get_audio
+    download_audio_btn = [editor._addButton(icons_dir, "text2audio",
+                        tip="Translate Text to Audio")]
+    return buttons + download_audio_btn
 
 def init():
     # Concatenate Editor.setupButtons with mySetupButtons
     # So that a new button is inserted into the Editor
-    Editor.setupButtons = wrap(Editor.setupButtons, mySetupButtons)
+    # Editor.setupButtons = wrap(Editor.setupButtons, mySetupButtons)
+    addHook("setupEditorButtons", mySetupButtons)

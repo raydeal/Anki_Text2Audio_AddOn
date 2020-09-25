@@ -4,8 +4,7 @@ Created on 6 maj 2018
 @author: Albert Defler
 '''
 from time import sleep
-import urllib
-import urllib2
+import urllib.request
 import json
 
 class SoundOfText:
@@ -19,14 +18,14 @@ class SoundOfText:
         
     def _post_request(self, path, data):
         url = self.url + path
-        params = json.dumps(data)
+        params = json.dumps(data).encode(encoding='utf_8')
         headers = self._get_headers()
-        return urllib2.Request(url = url, data = params, headers = headers)
+        return urllib.request.Request(url = url, data = params, headers = headers)
 
     def _get_request(self, path, id):
         url = self.url + path + '/' + id
         headers = self._get_headers()
-        return urllib2.Request(url = url, headers = headers)
+        return urllib.request.Request(url = url, headers = headers)
         
     def _get_order_status(self, id):
         '''Use this operation to get the current status of the requested sound
@@ -61,7 +60,7 @@ class SoundOfText:
         req = self._get_request(path, id)
         # try 3 times check status
         for i in range(3):
-            response = urllib2.urlopen(req)
+            response = urllib.request.urlopen(req)
             content = response.read()
             content = json.loads(content)
             if content['status'].upper() in ['DONE','ERROR']:
@@ -105,7 +104,7 @@ class SoundOfText:
                             }
                         }
         req = self._post_request('sounds', request_body)
-        response = urllib2.urlopen(req)
+        response = urllib.request.urlopen(req)
         content = response.read()
         return json.loads(content)
     
@@ -140,4 +139,4 @@ class SoundOfText:
             raise Exception('Text2Audio downloader: unsupported case')
             
     def download_file(self, url):
-        return urllib.urlretrieve(url)
+        return urllib.request.urlretrieve(url)
